@@ -1,12 +1,15 @@
 const express = require("express");
 const { MongoClient } = require("mongodb");
 const objectId = require("mongodb").ObjectId;
-const dotenv = require("dotenv").config();
+
 const cors = require("cors");
 const app = express();
 
 app.use(express.json());
 app.use(cors());
+
+// getting dotenv files
+require("dotenv").config();
 
 //  Port
 const port = process.env.PORT || 5000;
