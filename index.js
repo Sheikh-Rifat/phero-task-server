@@ -1,6 +1,6 @@
 const express = require("express");
 const { MongoClient } = require("mongodb");
-const objectId = require("mongodb").ObjectId;
+const ObjectId = require("mongodb").ObjectId;
 
 const cors = require("cors");
 const app = express();
@@ -54,7 +54,7 @@ async function run() {
           count,
         });
       } else if (foodId) {
-        const result = await allFood.findOne({ _id: objectId(foodId) });
+        const result = await allFood.findOne({ _id: ObjectId(foodId) });
         res.status(200).json(result);
       } else if (currentPage !== true && size !== true && foodId !== true) {
         const result = await allFood.find({}).toArray();
@@ -84,7 +84,7 @@ async function run() {
         const result = await allStudent.findOne({ roll: studentRoll });
         res.status(200).json(result);
       } else if (studentId) {
-        const result = await allStudent.findOne({ _id: objectId(studentId) });
+        const result = await allStudent.findOne({ _id: ObjectId(studentId) });
         res.status(200).json(result);
       }
     });
@@ -134,7 +134,7 @@ async function run() {
       for (let id of studentsId) {
         result = await allStudent.updateOne(
           {
-            _id: objectId(id),
+            _id: ObjectId(id),
           },
           {
             $set: {
@@ -150,7 +150,7 @@ async function run() {
       const { foodId } = req.query;
       const result = await allFood.updateOne(
         {
-          _id: objectId(foodId),
+          _id: ObjectId(foodId),
         },
         {
           $set: {
@@ -166,7 +166,7 @@ async function run() {
       const { studentId } = req.query;
       const result = await allStudent.updateOne(
         {
-          _id: objectId(studentId),
+          _id: ObjectId(studentId),
         },
         {
           $set: {
@@ -180,13 +180,13 @@ async function run() {
     // ALL DELETE API
     app.delete("/delete-single-food", async (req, res) => {
       const { foodId } = req.query;
-      const result = await allFood.deleteOne({ _id: objectId(foodId) });
+      const result = await allFood.deleteOne({ _id: ObjectId(foodId) });
       res.status(200).json(result);
     });
 
     app.delete("/delete-single-student", async (req, res) => {
       const { studentId } = req.query;
-      const result = await allStudent.deleteOne({ _id: objectId(studentId) });
+      const result = await allStudent.deleteOne({ _id: ObjectId(studentId) });
       res.status(200).json(result);
     });
   } catch (error) {
@@ -196,7 +196,7 @@ async function run() {
   }
 }
 
-run();
+run().catch(console.dir);
 
 app.get("/", (req, res) => {
   res.send("server working");
